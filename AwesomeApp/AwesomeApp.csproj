@@ -17,7 +17,7 @@
     <AssemblyName>AwesomeApp</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -225,19 +225,25 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\HtmlHelperExtensions.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Api\WorkoutsApiController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JournalsController.cs" />
+    <Compile Include="Controllers\JsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ViewModels\LayoutViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -249,6 +255,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\angular-mocks.js" />
+    <Content Include="Scripts\angular.js" />
+    <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -256,6 +265,7 @@
     </Content>
     <Content Include="connectionStrings.config" />
     <Content Include="appSettings.config" />
+    <Content Include="Scripts\angular.min.js.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -268,6 +278,18 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="ThemeAssets\css\bootstrap.css" />
+    <Content Include="ThemeAssets\css\bootstrap.min.css" />
+    <Content Include="ThemeAssets\css\business-casual.css" />
+    <Content Include="ThemeAssets\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="ThemeAssets\img\bg.jpg" />
+    <Content Include="ThemeAssets\img\intro-pic.jpg" />
+    <Content Include="ThemeAssets\img\slide-1.jpg" />
+    <Content Include="ThemeAssets\img\slide-2.jpg" />
+    <Content Include="ThemeAssets\img\slide-3.jpg" />
+    <Content Include="ThemeAssets\js\bootstrap.js" />
+    <Content Include="ThemeAssets\js\bootstrap.min.js" />
+    <Content Include="ThemeAssets\js\jquery.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -302,9 +324,23 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\_LayoutThemed.cshtml" />
+    <Content Include="Views\Home\ThemeExample.cshtml" />
+    <Content Include="Views\Shared\_LayoutThemed - Copy.cshtml" />
+    <Content Include="ThemeAssets\form-handler-nodb.php" />
+    <Content Include="ThemeAssets\form-handler.php" />
+    <Content Include="ThemeAssets\LICENSE" />
+    <Content Include="ThemeAssets\README.md" />
+    <Content Include="ThemeAssets\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="ThemeAssets\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="ThemeAssets\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="ThemeAssets\fonts\glyphicons-halflings-regular.woff2" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\Requests\" />
+    <Folder Include="Models\Responses\" />
+    <Folder Include="Services\Interfaces\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -332,7 +368,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>59455</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:59455/</IISUrl>
+          <IISUrl>http://awesomeapp.dev</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
