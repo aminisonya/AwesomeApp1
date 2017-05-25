@@ -13,10 +13,6 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>sqFitness</title>
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link href="css/business-casual.css" rel="stylesheet">
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic" rel="stylesheet" type="text/css">
@@ -54,16 +50,13 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="index.html">Home</a>
+                        <a href="~/workouts.html">Home</a>
                     </li>
                     <li>
-                        <a href="about.html">About</a>
+                        <a href="~/workouts/create.html">Add Workout</a>
                     </li>
                     <li>
-                        <a href="blog.html">Blog</a>
-                    </li>
-                    <li>
-                        <a href="contact.html">Contact</a>
+                        <a href="~/contact.html">Contact</a>
                     </li>
                 </ul>
             </div>
@@ -109,7 +102,7 @@
                     <hr class="tagline-divider">
                     <h2>
                         <small>
-                            By <strong>sq</strong>
+                            By <strong>sqFitness</strong>
                         </small>
                     </h2>
                 </div>
@@ -120,10 +113,9 @@
                 <div class="col-lg-12">
                     <hr>
                     <h2 class="intro-text text-center">
-                        Welcome to <strong>Awesome Gym Tracker</strong>
+                        Welcome to <strong>sqFitness Workout Tracker</strong>
                     </h2>
                     <hr>
-                    <img class="img-responsive img-border img-left" src="~/ThemeAssets/img/intro-pic.jpg" alt="">
                     <hr class="visible-xs">
                     @RenderBody()
                 </div>
@@ -149,11 +141,16 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <p>Copyright &copy; sq 2016</p>
+                    <p>Copyright &copy; sq 2017</p>
                 </div>
             </div>
         </div>
     </footer>
+   
+    <script src="~/ThemeAssets/js/jquery.js"></script>
+    <script src="~/ThemeAssets/js/bootstrap.min.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+
     <!-- Script to Activate the Carousel -->
     <script>
     $('.carousel').carousel({
@@ -161,9 +158,6 @@
     })
     </script>
 
-    <script src="~/ThemeAssets/js/bootstrap.min.js"></script>
-    <script src="~/ThemeAssets/js/jquery.js"></script>
-    <script src="~/Scripts/angular.min.js"></script>
     <script>
         var APPNAME = "awesomeApp";
         var awesomeAppMod = {
@@ -171,23 +165,24 @@
         };
     </script>
 
-    @RenderSection("pageInitScripts", false); //awesomeAppMod.extraModules.push();
+    @RenderSection("pageInitScripts", false); 
+    @*can add awesomeAppMod.extraModules.push();*@
 
     <script>
         //this is called Bootstrap angular (not to be confused with bootstrap CSS)
         (function() {
-            angular.module(APPNAME, awesomeApp.extraModules);
+            angular.module(APPNAME, awesomeAppMod.extraModules);
         })();
 
         // Converts server view model into JS.
-        awesomeApp.config = @Html.RawJson((object)Model);
-        awesomeApp.layoutConfig = @Html.RawJson(LayoutModel);
+        APPNAME.config = @Html.RawJson((object)Model);
+        APPNAME.layoutConfig = @Html.RawJson(LayoutModel);
 
         (function() {
             "use strict";
             if (typeof(angular) !== 'undefined') {
-                angular.module(APPNAME).constant("appConfig", awesomeApp.config);
-                angular.module(APPNAME).constant("layoutConfig", awesomeApp.layoutConfig);
+                angular.module(APPNAME).constant("appConfig", APPNAME.config);
+                angular.module(APPNAME).constant("layoutConfig", APPNAME.layoutConfig);
             }
         })();
     </script>

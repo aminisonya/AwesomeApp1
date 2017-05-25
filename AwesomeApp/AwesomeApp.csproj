@@ -235,7 +235,7 @@
     <Compile Include="Controllers\Api\WorkoutsApiController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\JournalsController.cs" />
+    <Compile Include="Controllers\WorkoutsController.cs" />
     <Compile Include="Controllers\JsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Domain\WeightliftingExercise.cs" />
@@ -288,6 +288,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\services\services.workouts.js" />
+    <Content Include="Scripts\services\services.weightexercisesfactory.js" />
+    <Content Include="Scripts\services\services.workoutsfactory.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="ThemeAssets\css\bootstrap.css" />
     <Content Include="ThemeAssets\css\bootstrap.min.css" />
@@ -346,9 +349,11 @@
     <Content Include="ThemeAssets\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="ThemeAssets\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="ThemeAssets\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Views\Workouts\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Enums\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

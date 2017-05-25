@@ -6,8 +6,8 @@ using System.Web.Mvc;
 
 namespace AwesomeApp.Controllers
 {
-    [RoutePrefix("journals")]
-    public class JournalsController : BaseController
+    [RoutePrefix("workouts")]
+    public class WorkoutsController : BaseController
     {
         [Route("")]
         public ActionResult Index()
