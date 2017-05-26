@@ -20,6 +20,7 @@ namespace AwesomeApp.Controllers.Api
             _workoutsService = workoutsService;
         }
 
+        [AllowAnonymous]
         [Route, HttpPost]
         public HttpResponseMessage CreateWorkout(WorkoutCreateRequest model)
         {

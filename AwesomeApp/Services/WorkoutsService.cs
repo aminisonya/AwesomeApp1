@@ -12,13 +12,6 @@ namespace AwesomeApp.Services
 {
     public class WorkoutsService : IWorkoutsService
     {
-        private IWorkoutsService _workoutsService;
-
-        public WorkoutsService(IWorkoutsService workoutsService)
-        {
-            _workoutsService = workoutsService;
-        }
-
         public int Create(WorkoutCreateRequest model)
         {
             int id = 0;
