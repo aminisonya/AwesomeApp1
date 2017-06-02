@@ -8,7 +8,7 @@ namespace AwesomeApp.Models.Requests
 {
     public class WorkoutCreateRequest
     {
-        [Required(ErrorMessage = "Workout name is required")]
+        [Required, MinLength(2)]
         public string WorkoutName { get; set; }
         
         public string WorkoutNote { get; set; }

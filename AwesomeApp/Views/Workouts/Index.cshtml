@@ -1,0 +1,152 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutThemed.cshtml";
+}
+
+@section styles {
+
+    <style></style>
+
+}
+
+<div class="card" ng-controller="WorkoutsMainController as main">
+    <div class="row card-body card-padding">
+        <div class="box">
+            <div class="col-lg-12 text-center">
+                <div id="carousel-example-generic" class="carousel slide">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators hidden-xs">
+                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                    </ol>
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <img class="img-responsive img-full" src="~/ThemeAssets/img/slide-1.jpg" alt="">
+                        </div>
+                        <div class="item">
+                            <img class="img-responsive img-full" src="~/ThemeAssets/img/slide-2.jpg" alt="">
+                        </div>
+                        <div class="item">
+                            <img class="img-responsive img-full" src="~/ThemeAssets/img/slide-3.jpg" alt="">
+                        </div>
+                    </div>
+                    <!-- Controls -->
+                    <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                        <span class="icon-prev"></span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                        <span class="icon-next"></span>
+                    </a>
+                </div>
+                <h2 class="brand-before">
+                    <small>Welcome to</small>
+                </h2>
+                <h1 class="brand-name">sqFitness</h1>
+                <hr class="tagline-divider">
+                <h2>
+                    <small>
+                        Your new workout journal
+                    </small>
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="row card-body card-padding">
+            <div class="box">
+                <hr>
+                <h2 class="intro-text text-center">
+                    <strong>Logged Workouts</strong>
+                </h2>
+                <hr>
+                <div class="panel panel-default" ng-repeat="workout in main.workouts" ng-model="main.workoutsPanel">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{workout.WorkoutName}}</h3>
+                    </div>
+                    <div class="panel-body" ng-show="workout.WorkoutNote != null">
+                        <p>{{workout.WorkoutNote}}</p>
+                    </div>
+
+                    <!--Table with list of weightlifting exercises-->
+                    @*<table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Exercise Name</th>
+                                    <th>Sets</th>
+                                    <th>Reps</th>
+                                    <th>Weight (lb)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="exercise in main.weightliftingExercises" ng-model="main.weightliftingExercisesTable">
+                                    <td>{{exercise.exerciseName}}</td>
+                                    <td>{{exercise.sets}}</td>
+                                    <td>{{exercise.reps}}</td>
+                                    <td>{{exercise.weight}}</td>
+                                </tr>
+                            </tbody>
+                        </table>*@
+
+                    <!--Edit/Delete buttons-->
+                    <button type="button" class="btn btn-default" ng-click="main.editWorkout()">Edit</button>
+                    <button type="button" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section scripts {
+
+    <script src="~/Scripts/services/services.workoutsfactory.js"></script>
+
+    <script type="text/javascript">
+        (function () {
+            "use strict";
+
+            angular.module(APPNAME).controller("WorkoutsMainController", WorkoutsMainController);
+
+            WorkoutsMainController.$inject = ["$scope", "appConfig", "workoutsDataFactory"];
+
+            function WorkoutsMainController($scope, appConfig, workoutsDataFactory) {
+                var vm = this;
+                vm.$scope = $scope;
+                vm.appConfig = appConfig;
+                vm.workoutsDataFactory = workoutsDataFactory;
+                vm.getAllWorkouts = _getAllWorkouts;
+                vm.workouts = null;
+                vm.editWorkout = _editWorkout;
+
+                _getAllWorkouts();
+
+                //success and error functions
+                vm.getWorkoutsCompletion = _getWorkoutsCompletion;
+                vm.getWorkoutsFailure = _getWorkoutsFailure;
+
+                function _getAllWorkouts() {
+                    workoutsDataFactory.getWorkouts()
+                        .then(_getWorkoutsCompletion)
+                        .catch(_getWorkoutsFailure);
+                }
+
+                function _getWorkoutsCompletion(response) {
+                    console.log(response.data);
+                    vm.workouts = response.data.Items;
+                }
+
+                function _getWorkoutsFailure(error) {
+                    console.log(error);
+                }
+
+                function _editWorkout() {
+                    //to be continued later
+                }
+
+            }
+        })();
+    </script>
+
+}

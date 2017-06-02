@@ -5,33 +5,23 @@
         var dataFactory = {};
 
         dataFactory.getWorkouts = function () {
-            return $http.get(urlBase)
-            .then(onCompletion)
-            .catch(onFailure);
+            return $http.get(urlBase);
         };
 
         dataFactory.getWorkout = function (id) {
-            return $http.get(urlBase + '/' + id)
-            .then(onCompletion)
-            .catch(onFailure);
+            return $http.get(urlBase + '/' + id);
         };
 
         dataFactory.insertWorkout = function (workout) {
-            return $http.post(urlBase, workout)
-            .then(onCompletion)
-            .catch(onFailure);
+            return $http.post(urlBase, workout);
         };
 
         dataFactory.updateWorkout = function (workout) {
-            return $http.put(urlBase + '/' + workout.ID, workout)
-            .then(onCompletion)
-            .catch(onFailure);
+            return $http.put(urlBase + '/' + workout.ID, workout);
         };
 
         dataFactory.deleteWorkout = function (id) {
-            return $http.delete(urlBase + '/' + id)
-            .then(onCompletion)
-            .catch(onFailure);
+            return $http.delete(urlBase + '/' + id);
         };
 
         return dataFactory;

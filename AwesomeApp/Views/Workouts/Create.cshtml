@@ -13,8 +13,8 @@
         <h2>Add Your Workout Entry Here!</h2>
     </div>
 
-    <div class="card-body card-padding" ng-controller="WorkoutsController as main">
-        <form name="main.workoutsForm" ng-submit="main.submitForm(main.workoutsForm.$valid)" novalidate>
+    <div class="row card-body card-padding" ng-controller="WorkoutsController as main">
+        <form class="form-horizontal" name="main.workoutsForm" ng-submit="main.submitForm(main.workoutsForm.$valid)" novalidate>
 
             <div class="form-group" ng-class="{'has-error' : main.workoutsForm.workoutName.$invalid && main.workoutsForm.$submitted }">
                 <label for="workoutName" class="col-sm-2 control-label">Workout Name</label>
@@ -37,14 +37,8 @@
 
             <div class="form-group">
                 <div class="col-sm-10">
-                    <button type="submit" class="btn btn-primary btn-sm firstClick">Submit Your Event</button>
-                    <button type="button" class="btn btn-danger" ng-click="main.reset()">Reset</button>
-                    <a type="button"
-                       class="btn palette-Pink bg"
-                       ng-href="/weightliftingexercises/create?workoutId={{main.appConfig.item}}"
-                       ng-show="main.appConfig && main.appConfig.item">
-                        Add Exercises to this workout
-                    </a>
+                    <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+                    <button type="button" class="btn btn-danger btn-sm" ng-click="main.resetForm()">Reset</button>
                 </div>
             </div>
 
@@ -63,14 +57,20 @@
 
             angular.module(APPNAME).controller("WorkoutsController", WorkoutsController);
 
-            WorkoutsController.$inject = ["$scope", "appConfig", "workoutsDataFactory"];
+            WorkoutsController.$inject = ["$scope", "appConfig", "workoutsDataFactory", '$window'];
 
-            function WorkoutsController($scope, appConfig, workoutsDataFactory) {
+            function WorkoutsController($scope, appConfig, workoutsDataFactory, $window) {
                 var vm = this;
                 vm.$scope = $scope;
                 vm.appConfig = appConfig;
+                vm.$window = $window;
                 vm.workoutsDataFactory = workoutsDataFactory;
                 vm.submitForm = _submitForm;
+                vm.resetForm = _resetForm;
+
+                //success and error functions
+                vm.onCompletionInsert = _onCompletionInsert;
+                vm.onFailureInsert = _onFailureInsert;
 
                 function _submitForm(isValid) {
                     if (isValid) {
@@ -80,13 +80,23 @@
                         }
 
                         vm.workoutsDataFactory.insertWorkout(workoutInfo)
-                            .then(function (response) {
-                                this.status = 'Inserted Workout!';
-                                //this.workoutsList.push(workoutInfo);
-                            }, function (error) {
-                                this.status = 'Unable to insert workout: ' + error.message;
-                            });
+                            .then(_onCompletionInsert)
+                            .catch(_onFailureInsert);
                     }
+                }
+
+                function _onCompletionInsert(response) {
+                    console.log(response);
+                    vm.$window.location.href = "/weightexercises/create"
+                }
+
+                function _onFailureInsert(error) {
+                    console.log(error);
+                }
+
+                function _resetForm() {
+                    vm.workout.workoutName = null;
+                    vm.workout.workoutNote = null;
                 }
             }
         })();

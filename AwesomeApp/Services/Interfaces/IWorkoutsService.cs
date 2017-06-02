@@ -1,4 +1,5 @@
-﻿using AwesomeApp.Models.Requests;
+﻿using AwesomeApp.Domain;
+using AwesomeApp.Models.Requests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,7 @@ namespace AwesomeApp.Services.Interfaces
         int Create(WorkoutCreateRequest model);
 
         void Update(WorkoutUpdateRequest model);
+
+        List<Workout> GetAllWorkouts();
     }
 }

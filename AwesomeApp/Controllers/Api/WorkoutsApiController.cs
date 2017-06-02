@@ -1,4 +1,5 @@
-﻿using AwesomeApp.Models.Requests;
+﻿using AwesomeApp.Domain;
+using AwesomeApp.Models.Requests;
 using AwesomeApp.Models.Responses;
 using AwesomeApp.Services.Interfaces;
 using System;
@@ -53,6 +54,20 @@ namespace AwesomeApp.Controllers.Api
             _workoutsService.Update(model);
 
             return Request.CreateResponse(HttpStatusCode.OK, new SuccessResponse());
+        }
+
+        [Route, HttpGet]
+        public HttpResponseMessage GetAllWorkouts()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+            }
+
+            ItemsResponse<Workout> response = new ItemsResponse<Workout>();
+            response.Items = _workoutsService.GetAllWorkouts();
+
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
     }
 }

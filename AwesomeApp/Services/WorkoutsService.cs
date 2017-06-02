@@ -1,4 +1,5 @@
-﻿using AwesomeApp.Models.Requests;
+﻿using AwesomeApp.Domain;
+using AwesomeApp.Models.Requests;
 using AwesomeApp.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -61,6 +62,45 @@ namespace AwesomeApp.Services
                     command.ExecuteNonQuery();
                 }
             }
+        }
+
+        public List<Workout> GetAllWorkouts()
+        {
+            List<Workout> list = null;
+
+            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("dbo.Workouts_SelectAll", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            Workout workout = new Workout();
+                            workout.Id = reader.GetInt32(reader.GetOrdinal("Id"));
+                            workout.WorkoutName = reader["WorkoutName"].ToString();
+                            workout.WorkoutNote = reader["WorkoutNote"].ToString();
+                            workout.DateCreated = reader.GetDateTime(reader.GetOrdinal("DateCreated"));
+                            workout.DateModified = reader.GetDateTime(reader.GetOrdinal("DateModified"));
+
+                            if (list == null)
+                            {
+                                list = new List<Workout>();
+                            }
+
+                            list.Add(workout);
+                        }
+                    }
+                    reader.Close();
+                }
+            }
+            return list;
         }
     }
 }
