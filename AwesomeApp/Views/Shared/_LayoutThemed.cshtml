@@ -158,11 +158,12 @@
     })
     </script>
 
-    <script>
+    <script type="text/javascript">
         var APPNAME = "awesomeApp";
         var awesomeAppMod = {
             extraModules: []
         };
+        var awesomeAppHome = {};
     </script>
 
     @RenderSection("pageInitScripts", false); 
@@ -175,14 +176,14 @@
         })();
 
         // Converts server view model into JS.
-        APPNAME.config = @Html.RawJson((object)Model);
-        APPNAME.layoutConfig = @Html.RawJson(LayoutModel);
+        awesomeAppHome.config = @Html.RawJson((object)Model);
+        awesomeAppHome.layoutConfig = @Html.RawJson(LayoutModel);
 
         (function() {
             "use strict";
             if (typeof(angular) !== 'undefined') {
-                angular.module(APPNAME).constant("appConfig", APPNAME.config);
-                angular.module(APPNAME).constant("layoutConfig", APPNAME.layoutConfig);
+                angular.module(APPNAME).constant("appConfig", awesomeAppHome.config);
+                angular.module(APPNAME).constant("layoutConfig", awesomeAppHome.layoutConfig);
             }
         })();
     </script>

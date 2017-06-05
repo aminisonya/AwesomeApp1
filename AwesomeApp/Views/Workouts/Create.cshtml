@@ -87,7 +87,8 @@
 
                 function _onCompletionInsert(response) {
                     console.log(response);
-                    vm.$window.location.href = "/weightexercises/create"
+                    var insertedId = response.data.Item;
+                    vm.$window.location.href = "/weightexercises/create?workoutId=" + insertedId;
                 }
 
                 function _onFailureInsert(error) {

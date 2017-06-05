@@ -11,26 +11,26 @@ using System.Web.Http;
 
 namespace AwesomeApp.Controllers.Api
 {
-    [RoutePrefix("api/workouts")]
-    public class WorkoutsApiController : ApiController
+    [RoutePrefix("api/weightexercises")]
+    public class WeightsApiController : ApiController
     {
-        private IWorkoutsService _workoutsService;
+        private IWeightsService _weightsService;
 
-        public WorkoutsApiController(IWorkoutsService workoutsService)
+        public WeightsApiController(IWeightsService weightsService)
         {
-            _workoutsService = workoutsService;
+            _weightsService = weightsService;
         }
 
         [AllowAnonymous]
         [Route, HttpPost]
-        public HttpResponseMessage CreateWorkout(WorkoutCreateRequest model)
+        public HttpResponseMessage CreateWeightExercise(WeightCreateRequest model)
         {
             if (!ModelState.IsValid)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
-            int id = _workoutsService.Create(model);
+            int id = _weightsService.Create(model);
 
             ItemResponse<int> response = new ItemResponse<int>();
             response.Item = id;
@@ -38,10 +38,10 @@ namespace AwesomeApp.Controllers.Api
             return Request.CreateResponse(HttpStatusCode.OK, response);
         }
 
-        [Route("{workoutId:int}"), HttpPut]
-        public HttpResponseMessage UpdateWorkout(WorkoutUpdateRequest model, int workoutId)
+        [Route("{weightexerciseId:int}"), HttpPut]
+        public HttpResponseMessage UpdateWeightExercise(WeightUpdateRequest model, int weightExerciseId)
         {
-            if(workoutId != model.Id)
+            if (weightExerciseId != model.Id)
             {
                 ModelState.AddModelError("Id", "The id does not match");
             }
@@ -51,37 +51,21 @@ namespace AwesomeApp.Controllers.Api
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
-            _workoutsService.Update(model);
+            _weightsService.Update(model);
 
             return Request.CreateResponse(HttpStatusCode.OK, new SuccessResponse());
         }
 
         [Route, HttpGet]
-        public HttpResponseMessage GetAllWorkouts()
+        public HttpResponseMessage GetAllWeightExercises()
         {
             if (!ModelState.IsValid)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
-            ItemsResponse<Workout> response = new ItemsResponse<Workout>();
-            response.Items = _workoutsService.GetAllWorkouts();
-
-            return Request.CreateResponse(HttpStatusCode.OK, response);
-        }
-
-        [Route("{workoutId:int}"), HttpGet]
-        public HttpResponseMessage GetWorkoutById(int workoutId)
-        {
-            if (!ModelState.IsValid)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
-            }
-
-            Workout workout = _workoutsService.GetById(workoutId);
-            ItemResponse<Workout> response = new ItemResponse<Workout>();
-
-            response.Item = workout;
+            ItemsResponse<WeightliftingExercise> response = new ItemsResponse<WeightliftingExercise>();
+            response.Items = _weightsService.GetAllWeightExercises();
 
             return Request.CreateResponse(HttpStatusCode.OK, response);
         }

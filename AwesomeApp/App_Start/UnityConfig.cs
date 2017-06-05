@@ -19,6 +19,7 @@ namespace AwesomeApp
             // e.g. container.RegisterType<ITestService, TestService>();
 
             container.RegisterType<IWorkoutsService, WorkoutsService>();
+            container.RegisterType<IWeightsService, WeightsService>();
 
             //sets up Unity for Web API controllers
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);

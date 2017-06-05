@@ -14,5 +14,8 @@ namespace AwesomeApp.Services.Interfaces
         void Update(WorkoutUpdateRequest model);
 
         List<Workout> GetAllWorkouts();
+
+        Workout GetById(int workoutId);
+
     }
 }

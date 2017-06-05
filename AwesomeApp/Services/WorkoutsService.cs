@@ -102,5 +102,38 @@ namespace AwesomeApp.Services
             }
             return list;
         }
+
+        public Workout GetById(int workoutId)
+        {
+            Workout workout = new Workout();
+
+            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("dbo.Workouts_SelectById", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@Id", workoutId);
+
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            workout.Id = reader.GetInt32(reader.GetOrdinal("Id"));
+                            workout.WorkoutName = reader["WorkoutName"].ToString();
+                            workout.WorkoutNote = reader["WorkoutNote"].ToString();
+                            workout.DateCreated = reader.GetDateTime(reader.GetOrdinal("DateCreated"));
+                            workout.DateModified = reader.GetDateTime(reader.GetOrdinal("DateModified"));
+                        }
+                    }
+                    reader.Close();
+                }
+            }
+            return workout;
+        }
     }
 }
