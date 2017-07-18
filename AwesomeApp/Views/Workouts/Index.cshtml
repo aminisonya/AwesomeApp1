@@ -102,6 +102,7 @@
 @section scripts {
 
     <script src="~/Scripts/services/services.workoutsfactory.js"></script>
+    <script src="~/Scripts/services/services.weightsfactory.js"></script>
 
     <script type="text/javascript">
         (function () {
@@ -109,9 +110,9 @@
 
             angular.module(APPNAME).controller("WorkoutsMainController", WorkoutsMainController);
 
-            WorkoutsMainController.$inject = ["$scope", "appConfig", "workoutsDataFactory"];
+            WorkoutsMainController.$inject = ["$scope", "appConfig", "workoutsDataFactory", 'weightsDataFactory'];
 
-            function WorkoutsMainController($scope, appConfig, workoutsDataFactory) {
+            function WorkoutsMainController($scope, appConfig, workoutsDataFactory, weightsDataFactory) {
                 var vm = this;
                 vm.$scope = $scope;
                 vm.appConfig = appConfig;

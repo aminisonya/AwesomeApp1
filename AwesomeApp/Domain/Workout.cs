@@ -13,6 +13,8 @@ namespace AwesomeApp.Domain
 
         public string WorkoutNote { get; set; }
 
+        public List<WeightliftingExercise> WeightExercises { get; set; }
+
         public DateTime DateCreated { get; set; }
 
         public DateTime DateModified { get; set; }

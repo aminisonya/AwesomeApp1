@@ -64,6 +64,7 @@ namespace AwesomeApp.Services
             }
         }
 
+        //need to add Dictionary, and add all exerises for all workouts
         public List<Workout> GetAllWorkouts()
         {
             List<Workout> list = null;
@@ -80,8 +81,8 @@ namespace AwesomeApp.Services
 
                     if (reader.HasRows)
                     {
-                        while (reader.Read())
-                        {
+                        reader.Read();
+                        
                             Workout workout = new Workout();
                             workout.Id = reader.GetInt32(reader.GetOrdinal("Id"));
                             workout.WorkoutName = reader["WorkoutName"].ToString();
@@ -89,13 +90,35 @@ namespace AwesomeApp.Services
                             workout.DateCreated = reader.GetDateTime(reader.GetOrdinal("DateCreated"));
                             workout.DateModified = reader.GetDateTime(reader.GetOrdinal("DateModified"));
 
-                            if (list == null)
+                        reader.NextResult();
+
+                        if (reader.HasRows)
+                        {
+                            workout.WeightExercises = new List<WeightliftingExercise>();
+
+                            while (reader.Read())
+                            {
+                                WeightliftingExercise exercise = new WeightliftingExercise();
+                                exercise.Id = reader.GetInt32(reader.GetOrdinal("Id"));
+                                exercise.WorkoutId = reader.GetInt32(reader.GetOrdinal("WorkoutId"));
+                                exercise.ExerciseName = reader["ExerciseName"].ToString();
+                                exercise.Sets = reader.GetInt32(reader.GetOrdinal("Sets"));
+                                exercise.Reps = reader.GetInt32(reader.GetOrdinal("Reps"));
+                                exercise.Weight = reader.GetInt32(reader.GetOrdinal("Weight"));
+                                exercise.DateCreated = reader.GetDateTime(reader.GetOrdinal("DateCreated"));
+                                exercise.DateModified = reader.GetDateTime(reader.GetOrdinal("DateModified"));
+
+                                workout.WeightExercises.Add(exercise);
+                            }
+                        }
+
+                        if (list == null)
                             {
                                 list = new List<Workout>();
                             }
 
                             list.Add(workout);
-                        }
+                        
                     }
                     reader.Close();
                 }
@@ -121,14 +144,36 @@ namespace AwesomeApp.Services
 
                     if (reader.HasRows)
                     {
-                        while (reader.Read())
-                        {
+                        reader.Read();
+                        
                             workout.Id = reader.GetInt32(reader.GetOrdinal("Id"));
                             workout.WorkoutName = reader["WorkoutName"].ToString();
                             workout.WorkoutNote = reader["WorkoutNote"].ToString();
                             workout.DateCreated = reader.GetDateTime(reader.GetOrdinal("DateCreated"));
                             workout.DateModified = reader.GetDateTime(reader.GetOrdinal("DateModified"));
-                        }
+
+                        reader.NextResult();
+
+                            if (reader.HasRows)
+                            {
+                                workout.WeightExercises = new List<WeightliftingExercise>();
+
+                                while (reader.Read())
+                                {
+                                    WeightliftingExercise exercise = new WeightliftingExercise();
+                                    exercise.Id = reader.GetInt32(reader.GetOrdinal("Id"));
+                                    exercise.WorkoutId = reader.GetInt32(reader.GetOrdinal("WorkoutId"));
+                                    exercise.ExerciseName = reader["ExerciseName"].ToString();
+                                    exercise.Sets = reader.GetInt32(reader.GetOrdinal("Sets"));
+                                    exercise.Reps = reader.GetInt32(reader.GetOrdinal("Reps"));
+                                    exercise.Weight = reader.GetInt32(reader.GetOrdinal("Weight"));
+                                    exercise.DateCreated = reader.GetDateTime(reader.GetOrdinal("DateCreated"));
+                                    exercise.DateModified = reader.GetDateTime(reader.GetOrdinal("DateModified"));
+
+                                    workout.WeightExercises.Add(exercise);
+                                }
+                            }
+                        
                     }
                     reader.Close();
                 }
