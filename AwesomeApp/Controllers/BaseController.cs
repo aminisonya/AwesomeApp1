@@ -1,25 +1,28 @@
-﻿using AwesomeApp.Models;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using AwesomeApp.Models;
+using AwesomeApp.Models.ViewModels;
+using AwesomeApp.Services.Interfaces;
+using System;
+using System.Linq;
+using System.Security.Claims;
+using System.Web;
 using System.Web.Mvc;
 
 namespace AwesomeApp.Controllers
 {
+    //add this after reg/login code is added
+    //[Authorize(Roles = "User")]
     public class BaseController : Controller
     {
-        protected LayoutViewModel LayoutModel
-        {
-            get { return (LayoutViewModel)ViewBag.LayoutModel; }
-            set { ViewBag.LayoutModel = value; }
-        }
-
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            // Setup defaults for layout. Can be changed in specific action methods through the LayoutViewModel property.
-            LayoutViewModel layoutModel = new LayoutViewModel
+            if (User.Identity.IsAuthenticated)
             {
-                IsLoggedIn = User.Identity.IsAuthenticated
-            };
-
-            LayoutModel = layoutModel;
+                ViewBag.navBarUser = "Yes";
+                ViewBag.userId = User.Identity.Name;
+            }
 
             base.OnActionExecuting(filterContext);
         }

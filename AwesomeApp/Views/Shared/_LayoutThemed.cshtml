@@ -1,9 +1,4 @@
-﻿@using AwesomeApp.App_Start;
-@using AwesomeApp.Models;
-@{
-    LayoutViewModel LayoutModel = (LayoutViewModel)ViewBag.LayoutViewModel;
-}
-
+﻿@using AwesomeApp.Models;
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -176,9 +171,8 @@
         })();
 
         // Converts server view model into JS.
-        awesomeAppHome.config = @Html.RawJson((object)Model);
-        awesomeAppHome.layoutConfig = @Html.RawJson(LayoutModel);
-
+        awesomeAppHome.config = @Html.Raw((object)Model);
+        
         (function() {
             "use strict";
             if (typeof(angular) !== 'undefined') {

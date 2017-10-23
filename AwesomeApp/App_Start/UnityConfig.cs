@@ -26,9 +26,6 @@ namespace AwesomeApp
 
             //sets up Unity for MVC controllers
             DependencyResolver.SetResolver(new Unity.Mvc5.UnityDependencyResolver(container));
-
-            //this line is needed so that the resolver can be used by api controllers
-            //config.DependencyResolver = new AwesomeApp.Injection.UnityResolver(container);
         }
     }
 }
